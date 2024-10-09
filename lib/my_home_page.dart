@@ -35,7 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
         isLoading = true;
       });
 
-      
       _controller.clear();
 
       final response = await model.generateContent(content);
@@ -230,7 +229,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     messages.clear();
-
     super.dispose();
   }
 }
