@@ -18,7 +18,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _controller = TextEditingController();
   final List<Message> messages = [];
-  bool isLoading = false; // Добавляем переменную для отслеживания загрузки
+  bool isLoading = false;
 
   callGeminiModel() async {
     try {
@@ -32,22 +32,22 @@ class _MyHomePageState extends State<MyHomePage> {
       final content = [Content.text(prompt)];
 
       setState(() {
-        isLoading = true; // Начинаем загрузку
+        isLoading = true;
       });
 
-      // Очищаем текстовое поле сразу после начала загрузки
+      
       _controller.clear();
 
       final response = await model.generateContent(content);
 
       setState(() {
         messages.add(Message(text: response.text!, isUser: false));
-        isLoading = false; // Завершаем загрузку
+        isLoading = false; 
       });
     } catch (e) {
       log("error : $e");
       setState(() {
-        isLoading = false; // Завершаем загрузку в случае ошибки
+        isLoading = false; 
       });
     }
   }
@@ -157,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 child: Container(
                   height:
-                      55.h, // Устанавливаем фиксированную высоту для TextField
+                      55.h, 
                   decoration: BoxDecoration(
                     color: context.isDarkMode ? Colors.grey[700] : Colors.white,
                     borderRadius: BorderRadius.circular(32.r),
@@ -178,12 +178,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: SingleChildScrollView(
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxHeight: 100.h, // Ограничиваем высоту TextField
+                              maxHeight: 100.h, 
                             ),
                             child: TextField(
                               controller: _controller,
                               maxLines:
-                                  null, // Позволяет тексту автоматически переноситься на новые строки
+                                  null, 
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
                                 hintText: "Write your message",
@@ -203,8 +203,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: EdgeInsets.all(16.sp),
                         child: isLoading
                             ? SizedBox(
-                                height: 24.h, // Фиксируем высоту индикатора
-                                width: 24.h, // Фиксируем ширину индикатора
+                                height: 24.h, 
+                                width: 24.h, 
                                 child: const CircularProgressIndicator(),
                               )
                             : GestureDetector(
