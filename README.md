@@ -1,4 +1,4 @@
-# bebra_ai
+# bebra_ai (Google Gemini powered app)
 
 A new Flutter project.
 
