@@ -1,6 +1,6 @@
-import 'package:bebra_ai/onboarding.dart';
-import 'package:bebra_ai/theme_cubit.dart';
-import 'package:bebra_ai/themes.dart';
+import 'package:bebra_ai/features/introduction/screens/onboarding.dart';
+import 'package:bebra_ai/common/theme/theme_cubit.dart';
+import 'package:bebra_ai/common/theme/themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

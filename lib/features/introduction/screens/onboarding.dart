@@ -1,5 +1,5 @@
-import 'package:bebra_ai/my_home_page.dart';
-import 'package:bebra_ai/theme_extension.dart';
+import 'package:bebra_ai/features/chat/screens/my_home_page.dart';
+import 'package:bebra_ai/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

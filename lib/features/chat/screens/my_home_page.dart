@@ -1,12 +1,9 @@
-import 'dart:developer';
-
-import 'package:bebra_ai/message.dart';
-import 'package:bebra_ai/theme_extension.dart';
+import 'package:bebra_ai/features/chat/services/chat_services.dart';
+import 'package:bebra_ai/models/message.dart';
+import 'package:bebra_ai/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -16,40 +13,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final ChatService chatService = ChatService();
   final TextEditingController _controller = TextEditingController();
   final List<Message> messages = [];
   bool isLoading = false;
 
-  callGeminiModel() async {
-    try {
-      if (_controller.text.isNotEmpty) {
-        messages.add(Message(text: _controller.text, isUser: true));
-      }
+  void callGeminiModel() async {
+    setState(() {
+      isLoading = true;
+    });
 
-      final model = GenerativeModel(
-          model: "gemini-pro", apiKey: dotenv.env["GOOGLE_API_KEY"]!);
-      final prompt = _controller.text.trim();
-      final content = [Content.text(prompt)];
+    await chatService.callGeminiModel(
+      controller: _controller,
+      messages: messages,
+    );
 
-      setState(() {
-        isLoading = true;
-      });
-
-      
-      _controller.clear();
-
-      final response = await model.generateContent(content);
-
-      setState(() {
-        messages.add(Message(text: response.text!, isUser: false));
-        isLoading = false; 
-      });
-    } catch (e) {
-      log("error : $e");
-      setState(() {
-        isLoading = false; 
-      });
-    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -156,8 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   right: 16.sp,
                 ),
                 child: Container(
-                  height:
-                      55.h, 
+                  height: 55.h,
                   decoration: BoxDecoration(
                     color: context.isDarkMode ? Colors.grey[700] : Colors.white,
                     borderRadius: BorderRadius.circular(32.r),
@@ -178,12 +158,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: SingleChildScrollView(
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxHeight: 100.h, 
+                              maxHeight: 100.h,
                             ),
                             child: TextField(
                               controller: _controller,
-                              maxLines:
-                                  null, 
+                              maxLines: null,
                               keyboardType: TextInputType.multiline,
                               decoration: InputDecoration(
                                 hintText: "Write your message",
@@ -203,15 +182,15 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: EdgeInsets.all(16.sp),
                         child: isLoading
                             ? SizedBox(
-                                height: 24.h, 
-                                width: 24.h, 
+                                height: 24.h,
+                                width: 24.h,
                                 child: const CircularProgressIndicator(),
                               )
                             : GestureDetector(
                                 onTap: () {
-                                  _controller.text.isNotEmpty
-                                      ? callGeminiModel()
-                                      : null;
+                                  if (_controller.text.isNotEmpty) {
+                                    callGeminiModel();
+                                  }
                                 },
                                 child: Image.asset("assets/send.png"),
                               ),
@@ -229,8 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    messages.clear();
-
+    _controller.dispose();
     super.dispose();
   }
 }
