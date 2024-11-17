@@ -1,6 +1,6 @@
 # bebra_ai (Google Gemini powered app)
 
-A new Flutter project.
+An AI Chat Bot application
 
 ## Getting Started
 
