@@ -2,6 +2,18 @@
 
 An AI Chat Bot application
 
+stack: 
+
+  cupertino_icons: ^1.0.2
+  flutter_screenutil: ^5.9.3
+  flutter_native_splash: ^2.3.7
+  flutter_riverpod: ^2.4.10
+  flutter_dotenv: ^5.1.0
+  google_generative_ai: ^0.4.6
+  flutter_bloc: ^8.1.6
+  hydrated_bloc: ^9.1.5
+  path_provider: ^2.1.3
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
